@@ -1,0 +1,537 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOyMvfADsh80digFKY1H5rR",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/SaikrishnaParamkusham/DAI/blob/master/DL_Assignment\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd"
+      ],
+      "metadata": {
+        "id": "7NktIERdsY9I"
+      },
+      "execution_count": 96,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "obj = pd.read_pickle(r'set_0.pkl')"
+      ],
+      "metadata": {
+        "id": "eBZtWFAesdIO"
+      },
+      "execution_count": 97,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_obj = pd.DataFrame(obj)"
+      ],
+      "metadata": {
+        "id": "ZZVqpxpx0J-l"
+      },
+      "execution_count": 98,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_obj.columns =['Image_Captions']"
+      ],
+      "metadata": {
+        "id": "9FAKBplW0YMb"
+      },
+      "execution_count": 99,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df_obj.head()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 206
+        },
+        "id": "Y3ny4ab62KXk",
+        "outputId": "1e20713d-ea88-4f28-9d1a-a6601d763126"
+      },
+      "execution_count": 100,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "                                      Image_Captions\n",
+              "0  318667317_108c402140.jpg#4\\tA man in a black h...\n",
+              "1  2072574835_febf0c5fb9.jpg#4\\tThree race dog be...\n",
+              "2  3083016677_5782bc337c.jpg#4\\tTwo motorcycle wi...\n",
+              "3  95734038_2ab5783da7.jpg#0\\tA man on a bike nes...\n",
+              "4  241346146_f27759296d.jpg#1\\tA football player ..."
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-9d4fe35d-efab-40b2-93bf-197158cae45c\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Image_Captions</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>318667317_108c402140.jpg#4\\tA man in a black h...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>2072574835_febf0c5fb9.jpg#4\\tThree race dog be...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>3083016677_5782bc337c.jpg#4\\tTwo motorcycle wi...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>95734038_2ab5783da7.jpg#0\\tA man on a bike nes...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>241346146_f27759296d.jpg#1\\tA football player ...</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-9d4fe35d-efab-40b2-93bf-197158cae45c')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-9d4fe35d-efab-40b2-93bf-197158cae45c button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-9d4fe35d-efab-40b2-93bf-197158cae45c');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 100
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "for i in range(len(df_obj)):\n",
+        "    df_obj[\"Image\"][i] = df_obj[\"Image_Captions\"][i].split(\"\\t\")[0]\n",
+        "    df_obj[\"Captions\"][i] = df_obj[\"Image_Captions\"][i].split(\"\\t\")[1]"
+      ],
+      "metadata": {
+        "id": "LCU2d9wxszng"
+      },
+      "execution_count": 103,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "display(df_obj)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 424
+        },
+        "id": "7wUSX2uVAZYS",
+        "outputId": "f548af9f-daab-434f-f9cd-19c72daaee4a"
+      },
+      "execution_count": 104,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "                                          Image_Captions  \\\n",
+              "0      318667317_108c402140.jpg#4\\tA man in a black h...   \n",
+              "1      2072574835_febf0c5fb9.jpg#4\\tThree race dog be...   \n",
+              "2      3083016677_5782bc337c.jpg#4\\tTwo motorcycle wi...   \n",
+              "3      95734038_2ab5783da7.jpg#0\\tA man on a bike nes...   \n",
+              "4      241346146_f27759296d.jpg#1\\tA football player ...   \n",
+              "...                                                  ...   \n",
+              "24995  2993388841_6746140656.jpg#3\\tA basketball play...   \n",
+              "24996  3578372039_57473f473c.jpg#1\\tA young man ride ...   \n",
+              "24997  3186073578_6e115f45f5.jpg#0\\tA man display a p...   \n",
+              "24998  2653552905_4301449235.jpg#3\\tTwo man stand in ...   \n",
+              "24999  3719461451_07de35af3a.jpg#0\\tA pelican fly ove...   \n",
+              "\n",
+              "                             Image  \\\n",
+              "0       318667317_108c402140.jpg#4   \n",
+              "1      2072574835_febf0c5fb9.jpg#4   \n",
+              "2      3083016677_5782bc337c.jpg#4   \n",
+              "3        95734038_2ab5783da7.jpg#0   \n",
+              "4       241346146_f27759296d.jpg#1   \n",
+              "...                            ...   \n",
+              "24995  2993388841_6746140656.jpg#3   \n",
+              "24996  3578372039_57473f473c.jpg#1   \n",
+              "24997  3186073578_6e115f45f5.jpg#0   \n",
+              "24998  2653552905_4301449235.jpg#3   \n",
+              "24999  3719461451_07de35af3a.jpg#0   \n",
+              "\n",
+              "                                                Captions  \n",
+              "0         A man in a black hoodie be hold a paper sign .  \n",
+              "1      Three race dog be run out of the start gate on...  \n",
+              "2                   Two motorcycle with two rider each .  \n",
+              "3                      A man on a bike nest to a river .  \n",
+              "4      A football player try tackle another player wh...  \n",
+              "...                                                  ...  \n",
+              "24995  A basketball player in a blue uniform be guard...  \n",
+              "24996  A young man ride a skateboard and carry large ...  \n",
+              "24997                       A man display a photograph .  \n",
+              "24998  Two man stand in front of a condominium buildi...  \n",
+              "24999                     A pelican fly over the water .  \n",
+              "\n",
+              "[25000 rows x 3 columns]"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-3da5d146-c22d-4668-9c84-6c9889639ed9\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Image_Captions</th>\n",
+              "      <th>Image</th>\n",
+              "      <th>Captions</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>318667317_108c402140.jpg#4\\tA man in a black h...</td>\n",
+              "      <td>318667317_108c402140.jpg#4</td>\n",
+              "      <td>A man in a black hoodie be hold a paper sign .</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>2072574835_febf0c5fb9.jpg#4\\tThree race dog be...</td>\n",
+              "      <td>2072574835_febf0c5fb9.jpg#4</td>\n",
+              "      <td>Three race dog be run out of the start gate on...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>3083016677_5782bc337c.jpg#4\\tTwo motorcycle wi...</td>\n",
+              "      <td>3083016677_5782bc337c.jpg#4</td>\n",
+              "      <td>Two motorcycle with two rider each .</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>95734038_2ab5783da7.jpg#0\\tA man on a bike nes...</td>\n",
+              "      <td>95734038_2ab5783da7.jpg#0</td>\n",
+              "      <td>A man on a bike nest to a river .</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>241346146_f27759296d.jpg#1\\tA football player ...</td>\n",
+              "      <td>241346146_f27759296d.jpg#1</td>\n",
+              "      <td>A football player try tackle another player wh...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>...</th>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>24995</th>\n",
+              "      <td>2993388841_6746140656.jpg#3\\tA basketball play...</td>\n",
+              "      <td>2993388841_6746140656.jpg#3</td>\n",
+              "      <td>A basketball player in a blue uniform be guard...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>24996</th>\n",
+              "      <td>3578372039_57473f473c.jpg#1\\tA young man ride ...</td>\n",
+              "      <td>3578372039_57473f473c.jpg#1</td>\n",
+              "      <td>A young man ride a skateboard and carry large ...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>24997</th>\n",
+              "      <td>3186073578_6e115f45f5.jpg#0\\tA man display a p...</td>\n",
+              "      <td>3186073578_6e115f45f5.jpg#0</td>\n",
+              "      <td>A man display a photograph .</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>24998</th>\n",
+              "      <td>2653552905_4301449235.jpg#3\\tTwo man stand in ...</td>\n",
+              "      <td>2653552905_4301449235.jpg#3</td>\n",
+              "      <td>Two man stand in front of a condominium buildi...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>24999</th>\n",
+              "      <td>3719461451_07de35af3a.jpg#0\\tA pelican fly ove...</td>\n",
+              "      <td>3719461451_07de35af3a.jpg#0</td>\n",
+              "      <td>A pelican fly over the water .</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "<p>25000 rows × 3 columns</p>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-3da5d146-c22d-4668-9c84-6c9889639ed9')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-3da5d146-c22d-4668-9c84-6c9889639ed9 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-3da5d146-c22d-4668-9c84-6c9889639ed9');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "os.getcwd()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 36
+        },
+        "id": "XrDwpBvyBjca",
+        "outputId": "eff5e555-76db-4661-ba94-c11e5c2eb315"
+      },
+      "execution_count": 105,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'/content'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 105
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "m-cricfxB8Mn",
+        "outputId": "b611fb45-3848-4238-89f3-51110d63dfd5"
+      },
+      "execution_count": 106,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "UsageError: Line magic function `%cd..` not found.\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
